@@ -8,10 +8,7 @@ p.setGravity(0,0,-10)
 planeId = p.loadURDF("plane.urdf")
 cubeStartPos = [0,0,1]
 cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
-boxId = p.loadURDF(os.getcwd() + "/catbot_pybullet/meshes", "catbot.urdf")
-p.enableRealTimeSimulation(1)
+boxId = p.loadURDF("catbot_pybullet/meshes/oneshape.urdf", cubeStartPos, cubeStartOrientation)
+p.setRealTimeSimulation(1)
 while True:
     pass
-cubePos, cubeOrn = p.getBasePositionAndOrientation(boxId)
-print(cubePos,cubeOrn)
-p.disconnect()
