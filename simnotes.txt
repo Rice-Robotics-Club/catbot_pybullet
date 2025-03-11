@@ -1,0 +1,38 @@
+b'FL_Hip'
+b'BR_Hip'
+b'BR_TopLeg'
+b'BR_BotLeg'
+b'BL_Hip'
+b'BL_TopLeg'
+b'BL_BotLeg'
+b'FR_Hip'
+b'FR_TopLeg'
+b'FR_BotLeg'
+b'FL_TopLeg'
+b'FL_BotLeg'
+Joints on robot (in order of pybullet)
+
+Joints on physical robot (code control)
+FL - 1st - hip - top - bot
+FR - 2nd
+BL - 3rd
+BR - 4th
+
+Mapping phy to sim
+0 - 11 
+1 - 10
+2 - 9
+
+3 - 8
+4 - 7
+5 - 6
+
+6 - 5
+7 - 4
+8 - 3
+
+9 - 2
+10 - 1
+11 - 0
+
+newarray = np.arrange(joints_input, [0, 10, 11, 7, 8, 9, 4, 5, 6, 1, 2, 3])
