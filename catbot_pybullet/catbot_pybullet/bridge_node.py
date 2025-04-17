@@ -32,24 +32,25 @@ class PyBulletBridge(Node):
     
     def joints_cmd_callback(self, msg: Float64MultiArray):
         """Receives joint commands and applies them to the PyBullet object."""
-        jnt_cmds = np.array(msg.data) / (360 / (2 * math.pi))
-        idx = [11, 10, 0, 7, 8, 9, 4, 5, 6, 1, 2, 3]
-        adjusted_joint_cmds = jnt_cmds[idx]
-        # self.get_logger().info(f"input position: {adjusted_joint_cmds}")
+        joints = np.array(msg.data)
+        
+        joints[0] *= -1
+        
+        idx = [0, 10, 11, 7, 8, 9, 4, 5, 6, 1, 2, 3]
+        self.get_logger().info(f"input position: {joints}")
         p.setJointMotorControlArray(bodyUniqueId=self.robotId,
-                                        jointIndices=range(12),
+                                        jointIndices=idx,
                                         controlMode=p.POSITION_CONTROL,
-                                        targetPositions=adjusted_joint_cmds)
-        for i in range(p.getNumJoints(self.robotId)):
-            jnt = p.getJointInfo(bodyUniqueId=self.robotId, jointIndex=i)
-            self.get_logger().info(f"joints to pybullet: {jnt[0:2]} \n")
+                                        targetPositions=joints)
+        # for i in range(p.getNumJoints(self.robotId)):
+        #     jnt = p.getJointInfo(bodyUniqueId=self.robotId, jointIndex=i)
+        #     self.get_logger().info(f"joints to pybullet: {jnt[0:2]} \n")
         
 
     
     def update_simulation(self):
         """Step simulation and publish object state."""
         p.stepSimulation()
-        time.sleep(0.01)  # Simulate real time
         
         # Get object position and orientation
         pos, orn = p.getBasePositionAndOrientation(self.robotId)
